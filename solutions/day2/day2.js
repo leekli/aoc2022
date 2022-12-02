@@ -49,46 +49,45 @@ function rockPaperScissorsDecoded(gameGuide) {
   let currentMoveSelectedScore = 0;
   let currentRoundScore = 0;
 
-  const moveSelectedScoresLookup = {
-    X: 1,
-    Y: 2,
-    Z: 3,
-  };
-
-  const winMoveLookup = {
-    A: "Y",
-    B: "Z",
-    C: "X",
-  };
-
-  const drawMoveLookup = {
-    A: "X",
-    B: "Y",
-    C: "Z",
-  };
-
-  const loseMoveLookup = {
-    A: "Z",
-    B: "X",
-    C: "Y",
+  const lookupObject = {
+    moveSelectedScore: {
+      X: 1,
+      Y: 2,
+      Z: 3,
+    },
+    winMove: {
+      A: "Y",
+      B: "Z",
+      C: "X",
+    },
+    drawMove: {
+      A: "X",
+      B: "Y",
+      C: "Z",
+    },
+    loseMove: {
+      A: "Z",
+      B: "X",
+      C: "Y",
+    },
   };
 
   for (let i = 0; i < splitGameGuideLength; i++) {
     const opponentMove = splitGameGuide[i][0];
     const myMove = splitGameGuide[i][2];
     if (myMove === "X") {
-      currentMoveSelectedScore =
-        moveSelectedScoresLookup[loseMoveLookup[opponentMove]];
+      const move = lookupObject.loseMove[opponentMove];
+      currentMoveSelectedScore = lookupObject.moveSelectedScore[move];
       currentRoundScore = 0;
     }
     if (myMove === "Y") {
-      currentMoveSelectedScore =
-        moveSelectedScoresLookup[drawMoveLookup[opponentMove]];
+      const move = lookupObject.drawMove[opponentMove];
+      currentMoveSelectedScore = lookupObject.moveSelectedScore[move];
       currentRoundScore = 3;
     }
     if (myMove === "Z") {
-      currentMoveSelectedScore =
-        moveSelectedScoresLookup[winMoveLookup[opponentMove]];
+      const move = lookupObject.winMove[opponentMove];
+      currentMoveSelectedScore = lookupObject.moveSelectedScore[move];
       currentRoundScore = 6;
     }
 
