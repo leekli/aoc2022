@@ -2,43 +2,43 @@
 
 file = open("input.txt", "r")
 fileContents = file.read()
+file.close()
 
 def calorieCounting(calories):
-    splitCalories = calories.split("\n")
-    currentElfCalorieCount = 0
-    highestScore = 0
+    split_calories = calories.split("\n")
+    current_elf_calorie_count = 0
+    highest_score = 0
     
-    for calorieSet in splitCalories:
-        if calorieSet != '':
-            currentElfCalorieCount += int(calorieSet)
+    for calorie_set in split_calories:
+        if calorie_set != '':
+            current_elf_calorie_count += int(calorie_set)
         else:
-            if currentElfCalorieCount > highestScore:
-                highestScore = currentElfCalorieCount 
-            currentElfCalorieCount = 0 
+            if current_elf_calorie_count > highest_score:
+                highest_score = current_elf_calorie_count 
+            current_elf_calorie_count = 0 
 
-    return highestScore
+    return highest_score
 
 def calorieCountingTop3(calories):
-    splitCalories = calories.split("\n")
-    currentElfCalorieCount = 0
-    totalCount = 0
-    calorieSumsArray = []
+    split_calories = calories.split("\n")
+    current_elf_calorie_count = 0
+    total_count = 0
+    calorie_sums_list = []
     
-    for calorieSet in splitCalories:
-        if calorieSet != '':
-            currentElfCalorieCount += int(calorieSet)
-        elif calorieSet == '':
-            calorieSumsArray.append(int(currentElfCalorieCount))
-            currentElfCalorieCount = 0
+    for calorie_set in split_calories:
+        if calorie_set != '':
+            current_elf_calorie_count += int(calorie_set)
+        elif calorie_set == '':
+            calorie_sums_list.append(int(current_elf_calorie_count))
+            current_elf_calorie_count = 0
             
-    sortedSumsArray = sorted(calorieSumsArray, key=int, reverse=True)
+    sorted_sums_list = sorted(calorie_sums_list, key=int, reverse=True)
 
-    totalCount = sortedSumsArray[0] + sortedSumsArray[1] + sortedSumsArray[2]
+    total_count = sorted_sums_list[0] + sorted_sums_list[1] + sorted_sums_list[2]
     
-    return totalCount
+    return total_count
 
 
 if __name__ == "__main__":
     print(calorieCounting(fileContents))
     print(calorieCountingTop3(fileContents))
-    file.close()
