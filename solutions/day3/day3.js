@@ -8,18 +8,15 @@ function ruckSackReOrg(rucksackList) {
   let prioritiesTotalSum = 0;
 
   splitRuckSackList.forEach((rucksack) => {
-    const midPoint = rucksack.length / 2;
-    const firstHalfString = rucksack.slice(0, midPoint).split("");
-    const secondHalfString = rucksack
-      .slice(midPoint, rucksack.length)
-      .split("");
+    const midPoint = rucksack.length / 2,
+      firstHalf = rucksack.slice(0, midPoint).split(""),
+      secondHalf = rucksack.slice(midPoint, rucksack.length).split("");
 
-    const repeatedType = secondHalfString.filter((itemType) => {
-      return firstHalfString.includes(itemType);
+    const repeatedType = secondHalf.filter((item) => {
+      return firstHalf.includes(item);
     });
 
-    const repeatedTypesRemoved = new Set(repeatedType);
-    const uniqueTypesArray = [...repeatedTypesRemoved];
+    const uniqueTypesArray = [...new Set(repeatedType)];
 
     const letterCharCode =
       uniqueTypesArray[0].charCodeAt(0) -
@@ -35,24 +32,22 @@ function ruckSackReOrg(rucksackList) {
 function mostCommonBagdes(rucksackList) {
   const splitRuckSackList = rucksackList.split("\n");
   let sumTotal = 0;
-
   const splitRuckSacksBy3 = 3;
-  for (let i = 0; i < splitRuckSackList.length; i += splitRuckSacksBy3) {
-    const split = splitRuckSackList.slice(i, i + splitRuckSacksBy3);
-    let mostCommonLetter = "";
-    for (let j = 0; j < split.length; j++) {
-      let allCharsIn3Rucksacks = [
-        ...new Set(split[0] + split[1] + split[2]),
-      ].join("");
 
-      for (let char of allCharsIn3Rucksacks) {
-        if (
-          split[0].includes(char) &&
-          split[1].includes(char) &&
-          split[2].includes(char)
-        ) {
-          mostCommonLetter = char;
-        }
+  for (let i = 0; i < splitRuckSackList.length; i += splitRuckSacksBy3) {
+    const setOf3RuckSacks = splitRuckSackList.slice(i, i + splitRuckSacksBy3);
+    let mostCommonLetter = "";
+    let allCharsIn3Rucksacks = [
+      ...new Set(setOf3RuckSacks[0] + setOf3RuckSacks[1] + setOf3RuckSacks[2]),
+    ].join("");
+
+    for (let char of allCharsIn3Rucksacks) {
+      if (
+        setOf3RuckSacks[0].includes(char) &&
+        setOf3RuckSacks[1].includes(char) &&
+        setOf3RuckSacks[2].includes(char)
+      ) {
+        mostCommonLetter = char;
       }
     }
     let letterCharCode =
