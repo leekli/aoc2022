@@ -26,35 +26,30 @@ function supplyStacks(stacksInput) {
     return eachMoveArray;
   };
 
-  const partOne = () => {
-    const newStack = JSON.parse(JSON.stringify(stack));
+  // Part 1
+  const p1Stack = JSON.parse(JSON.stringify(stack));
 
-    getMovesToMake.forEach((move) => {
-      const moveToMake = getEachMove([move]);
-      for (let i = 1; i <= moveToMake[0]; i++) {
-        const removedItem = newStack[moveToMake[1]].pop();
-        newStack[moveToMake[2]].push(removedItem);
-      }
-    });
-    return newStack;
-  };
+  getMovesToMake.forEach((move) => {
+    const moveToMake = getEachMove([move]);
+    for (let i = 1; i <= moveToMake[0]; i++) {
+      const removedItem = p1Stack[moveToMake[1]].pop();
+      p1Stack[moveToMake[2]].push(removedItem);
+    }
+  });
 
-  const partTwo = () => {
-    const newStack = JSON.parse(JSON.stringify(stack));
+  // Part 2
+  const p2Stack = JSON.parse(JSON.stringify(stack));
 
-    getMovesToMake.forEach((move) => {
-      const moveToMake = getEachMove([move]);
-      const removedItem = newStack[moveToMake[1]].slice(-moveToMake[0]);
-      for (let i = 0; i < moveToMake[0]; i++) {
-        newStack[moveToMake[1]].pop();
-        newStack[moveToMake[2]].push(removedItem[i]);
-      }
-    });
+  getMovesToMake.forEach((move) => {
+    const moveToMake = getEachMove([move]);
+    const removedItem = p2Stack[moveToMake[1]].slice(-moveToMake[0]);
+    for (let i = 0; i < moveToMake[0]; i++) {
+      p2Stack[moveToMake[1]].pop();
+      p2Stack[moveToMake[2]].push(removedItem[i]);
+    }
+  });
 
-    return newStack;
-  };
-
-  return { part1: partOne(), part2: partTwo() };
+  return { part1: p1Stack, part2: p2Stack };
 }
 
 console.log(supplyStacks(day5Input));
