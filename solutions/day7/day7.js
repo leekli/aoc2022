@@ -31,6 +31,8 @@ const part1 = (input) => {
     }
   }
 
+  console.log(folderContents);
+
   for (let folder in folderContents) {
     if (folderContents[folder] < 100000) {
       p1Total += folderContents[folder];
