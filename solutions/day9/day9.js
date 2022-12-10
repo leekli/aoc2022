@@ -32,14 +32,14 @@ const makeMoves = (moves, length) => {
       old_y = tail;
 
     if (Math.abs(x_diff) === 2 && Math.abs(y_diff) === 2) {
-      tail[0] += x_diff / 2;
-      tail[1] += y_diff / 2;
+      tail[0] += Math.floor(x_diff / 2);
+      tail[1] += Math.floor(y_diff / 2);
     } else {
       if (Math.abs(x_diff) === 2) {
-        tail[0] += x_diff / 2;
+        tail[0] += Math.floor(x_diff / 2);
         tail[1] = head[1];
       } else if (Math.abs(y_diff) === 2) {
-        tail[1] += y_diff / 2;
+        tail[1] += Math.floor(y_diff / 2);
         tail[0] = head[0];
       }
     }
@@ -77,5 +77,5 @@ const makeMoves = (moves, length) => {
   return tailVisited.size;
 };
 
-console.log(makeMoves(moveList, 2), "part 1"); // Part 1
+// console.log(makeMoves(moveList, 2), "part 1"); // Part 1
 console.log(makeMoves(moveList, 10), "part 2"); // Part 2
