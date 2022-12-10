@@ -3,7 +3,7 @@
 const fs = require("fs");
 
 const moveList = fs
-  .readFileSync("input-test.txt", "utf-8")
+  .readFileSync("input.txt", "utf-8")
   .split("\n")
   .map((move) => move.split(" "));
 
