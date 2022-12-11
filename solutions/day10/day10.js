@@ -1,7 +1,7 @@
 // AOC - DAY 10 ❄️
 
 const fs = require("fs");
-const input = fs.readFileSync("input-test.txt", "utf-8").split("\n");
+const input = fs.readFileSync("input.txt", "utf-8").split("\n");
 
 const part1 = () => {
   let register = 1,
@@ -57,68 +57,50 @@ const part2 = () => {
   // Build CRT Screen
   const crtScreen = buildCrtScreen();
 
-  let register = 1,
-    cycleNumber = 0;
+  let spriteStartPos = 0;
+  let crtRow = 0;
+  let crtRowPos = 0;
 
-  let startSlice = 0;
-  let endSlice = 39;
-
-  for (let i = 0; i < crtScreen.length; i++) {
-    let newRow = new Array(40);
-    let spriteStartPos = 0;
-    let splitInput = input.slice(startSlice, endSlice);
-
-    for (let j = 0; j < crtScreen[i].length; j++) {
-      if (j === 0) {
-        crtScreen[i][spriteStartPos] = "#";
-        crtScreen[i][spriteStartPos + 1] = "#";
-        crtScreen[i][spriteStartPos + 2] = "#";
-      }
-
-      cycleNumber++;
-
-      if (
-        crtScreen[i][j] === "#" ||
-        crtScreen[i][j + 1] === "#" ||
-        crtScreen[i][j + 2] === "#"
-      ) {
-        newRow[j] = "#";
-      } else {
-        newRow[j] = ".";
-      }
-
-      for (let k = 0; k < splitInput.length; k++) {
-        if (splitInput[k].startsWith("addx")) {
-          cycleNumber++;
-          if (
-            crtScreen[i][j + 1] === "#" ||
-            crtScreen[i][j + 2] === "#" ||
-            crtScreen[i][j + 3] === "#"
-          ) {
-            newRow[j + 1] = "#";
-          } else {
-            newRow[j + 1] = ".";
-          }
-
-          const numToAdjust = Number(splitInput[k].slice(5));
-          crtScreen[i][spriteStartPos] = ".";
-          crtScreen[i][spriteStartPos + 1] = ".";
-          crtScreen[i][spriteStartPos + 2] = ".";
-
-          crtScreen[i][spriteStartPos + numToAdjust] = "#";
-          //   crtScreen[i][spriteStartPos + numToAdjust + 1] = "#";
-          //   crtScreen[i][spriteStartPos + numToAdjust + 2] = "#";
-        }
-      }
+  const draw = () => {
+    if (crtRowPos === 40) {
+      crtRowPos = 0;
+      crtRow += 1;
     }
+    if (
+      [spriteStartPos, spriteStartPos + 1, spriteStartPos + 2].includes(
+        crtRowPos
+      )
+    ) {
+      crtScreen[crtRow][crtRowPos] = "#";
+    }
+    crtRowPos += 1;
+  };
 
-    crtScreen[i] = newRow;
-    spriteStartPos = 0;
-    startSlice = startSlice + 39 + 1;
-    endSlice = endSlice + 39 + 1;
-    console.table(crtScreen);
+  for (let i = 0; i < input.length; i++) {
+    if (input[i].startsWith("addx")) {
+      const numToAdjust = Number(input[i].slice(5));
+      for (let j = 0; j < 2; j++) {
+        draw();
+      }
+      spriteStartPos += numToAdjust;
+    }
+    if (input[i] === "noop") {
+      draw();
+    }
   }
+
+  return crtScreen.map((crtRow) => crtRow.join("")).join("\n");
 };
 
-console.log("Part 1: ", part1()); // part1
-// part2();
+console.log("Part 1: ", part1()); // Part 1
+console.log("Part 2:");
+console.log(part2()); // Part 2
+
+/* 
+####.#..#.###..####.###....##..##..#....
+#....#..#.#..#....#.#..#....#.#..#.#....
+###..####.#..#...#..#..#....#.#....#....
+#....#..#.###...#...###.....#.#.##.#....
+#....#..#.#....#....#....#..#.#..#.#....
+####.#..#.#....####.#.....##...###.####.
+*/
