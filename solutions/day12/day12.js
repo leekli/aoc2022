@@ -1,12 +1,11 @@
 const fs = require("fs");
 
 const lines = fs
-  .readFileSync("input.txt", { encoding: "utf-8" }) // read day??.txt content
-  .replace(/\r/g, "") // remove all \r characters to avoid issues on Windows
-  .trim() // Remove starting/ending whitespace
-  .split("\n"); // Split on newline
+  .readFileSync("input.txt", { encoding: "utf-8" })
+  .replace(/\r/g, "")
+  .trim()
+  .split("\n");
 
-// Return a new object to avoid side effects between part 1 and 2
 function getInput() {
   const res = {
     start: {},
